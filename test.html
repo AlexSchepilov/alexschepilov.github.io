@@ -53,12 +53,16 @@
     <script>
         const sections = document.querySelectorAll('.section');
         const themeColorMetaTag = document.querySelector('meta[name="theme-color"]');
+        let lastScrollY = window.scrollY; // Переменная для отслеживания последнего положения прокрутки
 
         window.addEventListener('scroll', function() {
+            const currentScrollY = window.scrollY; // Текущее положение прокрутки
+            const scrollDirection = currentScrollY > lastScrollY ? 'down' : 'up'; // Определяем направление прокрутки
+
             sections.forEach((section) => {
                 const sectionTop = section.getBoundingClientRect().top;
 
-                // Проверяем, находится ли верх секции в области видимости (примерно на уровне верхней части экрана)
+                // Проверяем, касается ли верх секции верхней части экрана
                 if (sectionTop >= 0 && sectionTop <= 50) {
                     let newColor;
                     if (section.classList.contains('red')) {
@@ -70,11 +74,28 @@
                     } else if (section.classList.contains('yellow')) {
                         newColor = '#ffff00'; // Жёлтый цвет
                     }
-                    
+
                     // Изменяем цвет статусбара
                     themeColorMetaTag.setAttribute('content', newColor);
+                } else if (scrollDirection === 'up' && sectionTop < 0 && sectionTop > -section.clientHeight + 50) {
+                    // Если скролл вверх и мы в пределах секции, которая еще не коснулась верха экрана
+                    let previousColor;
+                    if (section.classList.contains('red')) {
+                        previousColor = '#ff0000';
+                    } else if (section.classList.contains('green')) {
+                        previousColor = '#00ff00';
+                    } else if (section.classList.contains('blue')) {
+                        previousColor = '#0000ff';
+                    } else if (section.classList.contains('yellow')) {
+                        previousColor = '#ffff00';
+                    }
+
+                    // Меняем цвет статусбара на цвет предыдущей секции
+                    themeColorMetaTag.setAttribute('content', previousColor);
                 }
             });
+
+            lastScrollY = currentScrollY; // Обновляем последнее положение прокрутки
         });
     </script>
 
