@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ff0000" id="theme-color">
+
+    <!-- Обновлённый заголовок -->
+
+    <title>Капихаус — дом талантливых клиперов-капибар | VK Клипы × Московский зоопарк</title>
+
+    <!-- Обновлённые мета-данные -->
+
+    <meta name="title" content="Капихаус">
+    <meta name="description" content="Дом талантливых клиперов-капибар от VK Клипов и Московского зоопарка">
+    <meta name="author" content="VK Клипы">
+    <meta property="vk:image" content="/static/seo/capyhouse_1530x684.png">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Капихаус">
+    <meta property="og:description" content="Дом талантливых клиперов-капибар от VK Клипов и Московского зоопарка">
+    <meta property="og:image" content="/static/seo/capyhouse_1200x630.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Капихаус">
+    <meta property="twitter:description" content="Дом талантливых клиперов-капибар от VK Клипов и Московского зоопарка">
+    <meta property="twitter:image" content="/static/seo/capyhouse_1200x630.png">
+    <meta property="twitter:creator" content="@vkontakte">
+
+    <!-- Обновлённые фавиконки -->
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon/favicon-16x16.png">
+
+    <!-- Дальше уже код примера -->
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .section {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .red {
+            background-color: #ff0000;
+        }
+
+        .green {
+            background-color: #00ff00;
+        }
+
+        .blue {
+            background-color: #0000ff;
+        }
+
+        .yellow {
+            background-color: #ffff00;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="section red">Красный</div>
+    <div class="section yellow">Жёлтый</div>
+    <div class="section green">Зелёный</div>
+    <div class="section blue">Синий</div>
+
+
+    <script>
+        const sections = document.querySelectorAll('.section');
+        const themeColorMetaTag = document.querySelector('meta[name="theme-color"]');
+        let lastScrollY = window.scrollY; // Переменная для отслеживания последнего положения прокрутки
+
+        window.addEventListener('scroll', function() {
+            const currentScrollY = window.scrollY; // Текущее положение прокрутки
+            const scrollDirection = currentScrollY > lastScrollY ? 'down' : 'up'; // Определяем направление прокрутки
+
+            sections.forEach((section) => {
+                const sectionTop = section.getBoundingClientRect().top;
+
+                // Проверяем, касается ли верх секции верхней части экрана
+                if (sectionTop >= 0 && sectionTop <= 50) {
+                    let newColor;
+                    if (section.classList.contains('red')) {
+                        newColor = '#ff0000'; // Красный цвет
+                    } else if (section.classList.contains('green')) {
+                        newColor = '#00ff00'; // Зелёный цвет
+                    } else if (section.classList.contains('blue')) {
+                        newColor = '#0000ff'; // Синий цвет
+                    } else if (section.classList.contains('yellow')) {
+                        newColor = '#ffff00'; // Жёлтый цвет
+                    }
+
+                    // Изменяем цвет статусбара
+                    themeColorMetaTag.setAttribute('content', newColor);
+                } else if (scrollDirection === 'up' && sectionTop < 0 && sectionTop > -section.clientHeight + 50) {
+                    // Если скролл вверх и мы в пределах секции, которая еще не коснулась верха экрана
+                    let previousColor;
+                    if (section.classList.contains('red')) {
+                        previousColor = '#ff0000';
+                    } else if (section.classList.contains('green')) {
+                        previousColor = '#00ff00';
+                    } else if (section.classList.contains('blue')) {
+                        previousColor = '#0000ff';
+                    } else if (section.classList.contains('yellow')) {
+                        previousColor = '#ffff00';
+                    }
+
+                    // Меняем цвет статусбара на цвет предыдущей секции
+                    themeColorMetaTag.setAttribute('content', previousColor);
+                }
+            });
+
+            lastScrollY = currentScrollY; // Обновляем последнее положение прокрутки
+        });
+    </script>
+
+</body>
+</html>
