@@ -55,26 +55,26 @@
         const themeColorMetaTag = document.querySelector('meta[name="theme-color"]');
 
         window.addEventListener('scroll', function() {
-            let currentColor = '#ff0000'; // Default color
-
             sections.forEach((section) => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
+                const sectionTop = section.getBoundingClientRect().top;
 
-                if (window.scrollY >= sectionTop - sectionHeight / 2 && window.scrollY < sectionTop + sectionHeight / 2) {
+                // Проверяем, находится ли верх секции в области видимости (примерно на уровне верхней части экрана)
+                if (sectionTop >= 0 && sectionTop <= 50) {
+                    let newColor;
                     if (section.classList.contains('red')) {
-                        currentColor = '#ff0000';
+                        newColor = '#ff0000'; // Красный цвет
                     } else if (section.classList.contains('green')) {
-                        currentColor = '#00ff00';
+                        newColor = '#00ff00'; // Зелёный цвет
                     } else if (section.classList.contains('blue')) {
-                        currentColor = '#0000ff';
+                        newColor = '#0000ff'; // Синий цвет
                     } else if (section.classList.contains('yellow')) {
-                        currentColor = '#ffff00';
+                        newColor = '#ffff00'; // Жёлтый цвет
                     }
+                    
+                    // Изменяем цвет статусбара
+                    themeColorMetaTag.setAttribute('content', newColor);
                 }
             });
-
-            themeColorMetaTag.setAttribute('content', currentColor);
         });
     </script>
 
